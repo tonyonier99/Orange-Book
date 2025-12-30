@@ -233,7 +233,6 @@ calendarBtn.addEventListener('click', () => {
         'DTEND;VALUE=DATE:' + endDate,
         'SUMMARY:緊急避難包定期檢查 (6個月一次)',
         'DESCRIPTION:提醒您：今天該檢查避難包物資囉！請確認水、食物、電池是否過期。\\n\\nhttps://orange-book-checklist.zeabur.app/',
-        'URL:https://orange-book-checklist.zeabur.app/',
         'LOCATION:家中/辦公室',
         'TRANSP:TRANSPARENT',
         'END:VEVENT',
