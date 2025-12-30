@@ -17,7 +17,7 @@ const checklistData = [
                     { id: 'medical_3', label: '酸痛貼布或藥膏', desc: '' },
                     { id: 'medical_4', label: '衛生棉、護墊', desc: '' },
                     { id: 'medical_6', label: '口罩、乾洗手、濕紙巾、面紙', desc: '', span: 2 },
-                    { id: 'medical_5', label: '個人用醫藥品', desc: '每日服用、常用及常備藥等，注意保存時效及保存方式', span: 2 }
+                    { id: 'medical_5', label: '個人用醫藥品', desc: '每日服用、常用及常備藥等，<br>注意保存時效及保存方式', span: 2 }
                 ]
             },
             {

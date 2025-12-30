@@ -561,9 +561,9 @@ button:hover {
     }
 
     .item-desc {
-        display: inline;
-        margin-left: 5px;
-        margin-top: 0;
+        display: block;
+        margin-left: 23px;
+        margin-top: 2px;
     }
 
     .manual-footer-info {
