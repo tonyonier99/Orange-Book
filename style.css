@@ -360,7 +360,8 @@ button:hover {
 @media print {
     @page {
         size: A4;
-        margin: 0.8cm;
+        margin: 0.5cm;
+        /* Tighter margins */
     }
 
     body {
@@ -376,7 +377,8 @@ button:hover {
         max-width: none;
         border: none;
         box-shadow: none;
-        transform: scale(0.95);
+        transform: scale(0.9);
+        /* Reduce scale to fit */
         transform-origin: top center;
         margin: 0;
         padding: 0;
@@ -391,35 +393,39 @@ button:hover {
     }
 
     .manual-header-box {
-        padding: 8px 0;
+        padding: 5px 0;
+        /* Reduced padding */
     }
 
     .manual-header-box h1 {
-        font-size: 28px;
+        font-size: 26px;
+        /* Slightly smaller header */
+        margin-bottom: 5px;
     }
 
     .manual-table {
         margin: 0;
-        border-width: 2.5px;
+        border-width: 2px;
     }
 
     .category-row {
-        border-bottom-width: 2.5px;
+        border-bottom-width: 2px;
         page-break-inside: avoid;
     }
 
     .side-header {
-        font-size: 15px;
-        width: 30px;
+        font-size: 14px;
+        width: 28px;
+        padding: 0 4px;
     }
 
     .sub-category {
-        min-height: 38px;
+        min-height: 32px;
     }
 
     .sub-label {
-        width: 110px;
-        font-size: 14px;
+        width: 100px;
+        font-size: 13px;
         padding: 4px;
     }
 
@@ -427,43 +433,45 @@ button:hover {
         display: grid !important;
         grid-template-columns: 1fr 1fr !important;
         grid-auto-flow: dense !important;
-        padding: 6px 15px;
-        gap: 0 15px;
+        padding: 4px 10px;
+        /* Tighter padding */
+        gap: 0 10px;
     }
 
     .item {
-        font-size: 13.5px;
-        line-height: 1.4;
+        font-size: 13px;
+        /* Smaller font */
+        line-height: 1.35;
         margin: 0;
     }
 
     .item-desc {
-        font-size: 11px;
+        font-size: 10.5px;
     }
 
     .manual-footer-info {
-        margin: 8px 0;
-        padding: 10px;
+        margin: 5px 0 0;
+        padding: 8px;
         border-width: 1.5px;
     }
 
     .date-row {
-        font-size: 13px;
-        margin-bottom: 4px;
+        font-size: 12px;
+        margin-bottom: 2px;
     }
 
     .tips-box {
-        padding-top: 6px;
+        padding-top: 4px;
     }
 
     .tips-box h4 {
-        font-size: 13px;
+        font-size: 12px;
         margin-bottom: 2px;
     }
 
     .tips-box ul {
-        font-size: 12px;
-        line-height: 1.4;
+        font-size: 11px;
+        line-height: 1.3;
     }
 }
 
