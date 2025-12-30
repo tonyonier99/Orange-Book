@@ -290,7 +290,16 @@ downloadBtn.addEventListener('click', () => {
         scale: 2, // High resolution
         useCORS: true,
         backgroundColor: '#ffffff',
-        windowWidth: 1200 // Force desktop layout even on mobile
+        windowWidth: 1280, // Force desktop width
+        onclone: (clonedDoc) => {
+            const clonedTarget = clonedDoc.querySelector('.manual-container');
+            // Force desktop layout and disable mobile text inflation
+            clonedTarget.style.width = '850px';
+            clonedTarget.style.maxWidth = '850px';
+            clonedTarget.style.margin = '0 auto';
+            clonedTarget.style.webkitTextSizeAdjust = '100%';
+            clonedTarget.style.textSizeAdjust = '100%';
+        }
     }).then(canvas => {
         const link = document.createElement('a');
         link.download = '全民國防應變手冊-避難包清單.png';
