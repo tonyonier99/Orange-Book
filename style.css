@@ -312,15 +312,19 @@ body {
 /* Actions Spacing */
 .actions {
     display: flex;
-    gap: 8px;
+    gap: 10px;
     margin-top: 15px;
-    justify-content: space-between;
+    /* Allow wrapping on narrow desktop/tablets if needed, but keep centered/spaced */
+    flex-wrap: wrap;
 }
 
 .actions button {
     flex: 1;
+    /* Distribute space evenly */
+    min-width: 80px;
+    /* Prevent being too narrow */
     white-space: nowrap;
-    padding: 8px 2px;
+    padding: 8px 5px;
     font-size: 11px;
 }
 
@@ -462,7 +466,8 @@ button:hover {
         line-height: 1.4;
     }
 }
-@media (max-width: 768px) {
+
+@media screen and (max-width: 768px) {
     body {
         padding: 0;
         display: block;
@@ -497,9 +502,10 @@ button:hover {
         border: none;
         border-radius: 0;
         border-bottom: 1px solid #ddd;
-        padding: 12px 20px;
+        padding: 10px 15px;
         margin-bottom: 10px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        z-index: 999;
     }
 
     /* Table layout on mobile */
@@ -557,13 +563,28 @@ button:hover {
         padding: 12px;
     }
 
+    /* Mobile Actions: Horizontal Scroll (Single Row) */
     .actions {
-        padding: 0 10px;
-        flex-wrap: wrap;
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 5px;
+        /* Space for scrollbar */
+        gap: 10px;
+        -webkit-overflow-scrolling: touch;
+        /* Smooth scroll on iOS */
     }
 
     .actions button {
-        flex: 1 1 45%;
-        margin-bottom: 8px;
+        flex: 0 0 auto;
+        /* Don't shrink, don't grow */
+        width: auto;
+        margin-bottom: 0;
+        padding: 8px 12px;
+    }
+
+    /* Hide scrollbar for cleaner look but keep functionality */
+    .actions::-webkit-scrollbar {
+        display: none;
     }
 }
