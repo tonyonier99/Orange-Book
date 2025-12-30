@@ -244,6 +244,37 @@ calendarBtn.addEventListener('click', () => {
     link.href = window.URL.createObjectURL(blob);
     link.download = '防災包檢查提醒.ics';
     link.click();
+
+    // Alert for mobile users
+    setTimeout(() => {
+        alert('提醒檔案已下載！\n請至手機的「檔案」或瀏覽器的「下載項目」中點擊該檔案，即可匯入行事曆。');
+    }, 500);
+});
+
+const googleCalBtn = document.getElementById('google-cal-btn');
+googleCalBtn.addEventListener('click', () => {
+    const now = new Date();
+    const future = new Date(now.setMonth(now.getMonth() + 6));
+
+    // Format: YYYYMMDD (Google needs this for all-day events)
+    const formatDate = (d) => {
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return "" + y + m + day;
+    };
+
+    const startDate = formatDate(future);
+    const nextDay = new Date(future.getTime() + 86400000);
+    const endDate = formatDate(nextDay);
+
+    const title = encodeURIComponent('緊急避難包定期檢查 (6個月一次)');
+    const details = encodeURIComponent('提醒您：今天該檢查避難包物資囉！請確認水、食物、電池是否過期。\n\nhttps://orange-book-checklist.zeabur.app/');
+    const location = encodeURIComponent('家中/辦公室');
+
+    const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${location}&dates=${startDate}/${endDate}`;
+
+    window.open(googleUrl, '_blank');
 });
 
 const downloadBtn = document.getElementById('download-btn');
@@ -258,7 +289,8 @@ downloadBtn.addEventListener('click', () => {
     html2canvas(target, {
         scale: 2, // High resolution
         useCORS: true,
-        backgroundColor: '#ffffff'
+        backgroundColor: '#ffffff',
+        windowWidth: 1200 // Force desktop layout even on mobile
     }).then(canvas => {
         const link = document.createElement('a');
         link.download = '全民國防應變手冊-避難包清單.png';
