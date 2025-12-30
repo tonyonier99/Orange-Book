@@ -163,111 +163,6 @@ body {
     align-content: center;
 }
 
-@media (max-width: 768px) {
-    body {
-        padding: 0;
-        display: block;
-        /* Fix flex layout causing side-by-side issue */
-    }
-
-    .manual-container {
-        width: 100%;
-        padding: 10px 0 20px;
-        margin: 0 auto;
-    }
-
-    .manual-header-box h1 {
-        font-size: 24px;
-        letter-spacing: 2px;
-    }
-
-    .top-right-note {
-        position: relative;
-        top: 0;
-        right: 0;
-        margin-bottom: 15px;
-        font-size: 10px;
-    }
-
-    /* Fixed Progress Bar on mobile */
-    .progress-section {
-        position: sticky;
-        top: 0;
-        left: 0;
-        width: 100%;
-        border: none;
-        border-radius: 0;
-        border-bottom: 1px solid #ddd;
-        padding: 12px 20px;
-        margin-bottom: 10px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    }
-
-    /* Table layout on mobile */
-    .category-row {
-        flex-direction: column;
-        border-left: none;
-        border-right: none;
-    }
-
-    .side-header {
-        width: 100%;
-        padding: 10px;
-        writing-mode: horizontal-tb;
-        border-right: none;
-        border-bottom: 2.5px solid var(--border-color);
-        font-size: 18px;
-    }
-
-    .sub-category {
-        flex-direction: column;
-    }
-
-    .sub-label {
-        width: 100%;
-        border-right: none;
-        border-bottom: 1px solid var(--border-color);
-        background: #fcfcfc;
-        padding: 8px;
-        font-size: 16px;
-        white-space: normal;
-    }
-
-    .items-container {
-        grid-template-columns: 1fr;
-        padding: 12px 15px;
-        gap: 8px;
-    }
-
-    .item.span-2 {
-        grid-column: span 1;
-    }
-
-    .item {
-        font-size: 15px;
-    }
-
-    .item-desc {
-        display: block;
-        margin-left: 23px;
-        margin-top: 2px;
-    }
-
-    .manual-footer-info {
-        margin: 15px 10px;
-        padding: 12px;
-    }
-
-    .actions {
-        padding: 0 10px;
-        flex-wrap: wrap;
-    }
-
-    .actions button {
-        flex: 1 1 45%;
-        margin-bottom: 8px;
-    }
-}
 
 .item {
     display: flex;
@@ -565,5 +460,110 @@ button:hover {
     .tips-box ul {
         font-size: 12px;
         line-height: 1.4;
+    }
+}
+@media (max-width: 768px) {
+    body {
+        padding: 0;
+        display: block;
+        /* Fix flex layout causing side-by-side issue */
+    }
+
+    .manual-container {
+        width: 100%;
+        padding: 10px 0 20px;
+        margin: 0 auto;
+    }
+
+    .manual-header-box h1 {
+        font-size: 24px;
+        letter-spacing: 2px;
+    }
+
+    .top-right-note {
+        position: relative;
+        top: 0;
+        right: 0;
+        margin-bottom: 15px;
+        font-size: 10px;
+    }
+
+    /* Fixed Progress Bar on mobile */
+    .progress-section {
+        position: sticky;
+        top: 0;
+        left: 0;
+        width: 100%;
+        border: none;
+        border-radius: 0;
+        border-bottom: 1px solid #ddd;
+        padding: 12px 20px;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Table layout on mobile */
+    .category-row {
+        flex-direction: column;
+        border-left: none;
+        border-right: none;
+    }
+
+    .side-header {
+        width: 100%;
+        padding: 10px;
+        writing-mode: horizontal-tb;
+        border-right: none;
+        border-bottom: 2.5px solid var(--border-color);
+        font-size: 18px;
+    }
+
+    .sub-category {
+        flex-direction: column;
+    }
+
+    .sub-label {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        background: #fcfcfc;
+        padding: 8px;
+        font-size: 16px;
+        white-space: normal;
+    }
+
+    .items-container {
+        grid-template-columns: 1fr;
+        padding: 12px 15px;
+        gap: 8px;
+    }
+
+    .item.span-2 {
+        grid-column: span 1;
+    }
+
+    .item {
+        font-size: 15px;
+    }
+
+    .item-desc {
+        display: block;
+        margin-left: 23px;
+        margin-top: 2px;
+    }
+
+    .manual-footer-info {
+        margin: 15px 10px;
+        padding: 12px;
+    }
+
+    .actions {
+        padding: 0 10px;
+        flex-wrap: wrap;
+    }
+
+    .actions button {
+        flex: 1 1 45%;
+        margin-bottom: 8px;
     }
 }
