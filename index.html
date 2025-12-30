@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>緊急避難包準備 - 全民國防手冊版</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap"
+        rel="stylesheet">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</head>
+
+<body>
+    <!-- Interactive Progress Section (Floating on left) -->
+    <div class="progress-section">
+        <div class="progress-header">目前準備進度：<span id="progress-percent">0%</span></div>
+        <div class="progress-bar-bg">
+            <div id="progress-fill" class="progress-fill"></div>
+        </div>
+        <div class="actions">
+            <button id="clear-btn">清除進度</button>
+            <button id="calendar-btn" style="background: #FFF9C4; color: #856404;">預約提醒</button>
+            <button id="download-btn" style="background: #E3F2FD; color: #1976D2; border-color: #BBDEFB;">下載圖片</button>
+            <button id="print-btn" class="primary-btn">列印本頁</button>
+        </div>
+    </div>
+
+    <div class="manual-container">
+        <div class="top-right-note">可列印隨身攜帶</div>
+
+        <header class="manual-header-box">
+            <h1>緊急避難包準備</h1>
+        </header>
+
+        <main id="checklist-container">
+            <!-- Table content will be loaded here via JS -->
+        </main>
+
+        <div class="official-link-box" data-html2canvas-ignore>
+            <a href="https://prepare.mnd.gov.tw/" target="_blank" class="official-btn">
+                進一步了解：國防部「全民國防應變手冊」官網
+            </a>
+        </div>
+
+        <div class="creator-credit" data-html2canvas-ignore>
+            製作者：<a href="https://yasac.notion.site/2388d795636880929154e21565383382" target="_blank">《呀沙係・引力》</a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
