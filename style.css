@@ -166,11 +166,14 @@ body {
 @media (max-width: 768px) {
     body {
         padding: 0;
+        display: block;
+        /* Fix flex layout causing side-by-side issue */
     }
 
     .manual-container {
         width: 100%;
         padding: 10px 0 20px;
+        margin: 0 auto;
     }
 
     .manual-header-box h1 {
