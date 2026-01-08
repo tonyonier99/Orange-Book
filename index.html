@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>緊急避難包準備 - 全民國防手冊版</title>
+    <title>小橘書防災清單 - 個人化防災物資檢查</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,6 +14,35 @@
 </head>
 
 <body>
+    <!-- Full-screen Welcome Landing Page -->
+    <div id="landing-page" class="landing-overlay">
+        <div class="landing-content">
+            <h1 class="landing-title">準備好面對災害了嗎？</h1>
+            <p class="landing-subtitle">請選擇您目前要查看或清點的項目：</p>
+            <div class="landing-choices">
+                <button class="landing-card" data-choice="home">
+                    <div class="card-icon">🏠</div>
+                    <div class="card-info">
+                        <h3>居家物資儲備</h3>
+                        <p>適合平時儲存，以應付斷水斷電、交通中斷時，能在家中維持 7-14 天的基本生活。</p>
+                    </div>
+                    <div class="card-action">開始清點</div>
+                </button>
+                <button class="landing-card" data-choice="escape">
+                    <div class="card-icon">🎒</div>
+                    <div class="card-info">
+                        <h3>緊急避難包</h3>
+                        <p>地震或重大災害發生導致房屋傾斜、失火時，能迅速背起撤離至避難地點的生存包。</p>
+                    </div>
+                    <div class="card-action">開始清點</div>
+                </button>
+            </div>
+            <div class="landing-footer">
+                <p>💡 建議：防災的第一步是具備兩者的概念。</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Interactive Progress Section (Floating on left) -->
     <div class="progress-section">
         <div class="progress-header">目前準備進度：<span id="progress-percent">0%</span></div>
@@ -26,15 +55,14 @@
             <button id="google-cal-btn" style="background: #4285F4; color: white; border: 1px solid #4285F4;">加入 Google
                 日曆</button>
             <button id="download-btn" style="background: #E3F2FD; color: #1976D2; border-color: #BBDEFB;">下載圖片</button>
+            <button id="share-btn" style="background: #E8F5E9; color: #2E7D32; border-color: #C8E6C9;">分享給好友</button>
             <button id="print-btn" class="primary-btn">列印本頁</button>
         </div>
     </div>
 
     <div class="manual-container">
-        <div class="top-right-note">可列印隨身攜帶</div>
-
         <header class="manual-header-box">
-            <h1>緊急避難包準備</h1>
+            <h1>居家物資儲備</h1>
         </header>
 
         <main id="checklist-container">

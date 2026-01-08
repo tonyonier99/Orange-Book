@@ -118,18 +118,106 @@ const checklistData = [
     }
 ];
 
+const homeReservesData = [
+    {
+        sideLabel: '生存維生',
+        subCategories: [
+            {
+                title: '飲水與糧食',
+                items: [
+                    { id: 'home_water_large', label: '飲用水 (每人每日3L)', desc: '建議儲備 7-14 日份，可用大型水箱', span: 2 },
+                    { id: 'home_food_staple', label: '主食類', desc: '米、乾麵條、即食飯、真空包裝食品', span: 2 },
+                    { id: 'home_food_can', label: '罐頭食品', desc: '肉類、蔬菜、水果罐頭，注意開罐器', span: 2 },
+                    { id: 'home_snack_energy', label: '能量食品', desc: '營養棒、巧克力、堅果、果乾', span: 2 },
+                    { id: 'home_seasoning', label: '基本調味料', desc: '鹽、糖、油', span: 2 }
+                ]
+            },
+            {
+                title: '烹飪與食具',
+                items: [
+                    { id: 'home_stove_pack', label: '卡式爐與瓦斯罐', desc: '建議準備 3-5 罐備用瓦斯', span: 2 },
+                    { id: 'home_lighter_long', label: '長嘴點火槍/打火機', desc: '點火安全用' },
+                    { id: 'home_tableware_set', label: '餐具與廚具', desc: '可重複使用或免洗餐具' }
+                ]
+            }
+        ]
+    },
+    {
+        sideLabel: '衛生醫療',
+        subCategories: [
+            {
+                title: '急救與醫藥',
+                items: [
+                    { id: 'home_medical_kit', label: '綜合急救箱', desc: '優碘、紗布、OK繃、體溫計', span: 2 },
+                    { id: 'home_chronic_med', label: '個人及慢性病藥物', desc: '至少準備 14 日份備用藥', span: 2 },
+                    { id: 'home_regular_med', label: '常備藥品', desc: '感冒藥、止痛藥、腸胃藥', span: 2 }
+                ]
+            },
+            {
+                title: '清潔與排泄',
+                items: [
+                    { id: 'home_toilet_kit', label: '簡易便器/凝固劑', desc: '斷水時搭配塑膠袋使用', span: 2 },
+                    { id: 'home_sanitation_1', label: '高容量酒精/乾洗手', desc: '替代洗手清潔' },
+                    { id: 'home_sanitation_2', label: '大包裝濕紙巾/衛生紙', desc: '' },
+                    { id: 'home_sanitation_3', label: '大型垃圾袋/塑膠袋', desc: '廢棄物密封處理', span: 2 }
+                ]
+            }
+        ]
+    },
+    {
+        sideLabel: '生活工具',
+        subCategories: [
+            {
+                title: '照明與通訊',
+                items: [
+                    { id: 'home_lantern', label: 'LED 露營燈/手提燈', desc: '居家環境照明', span: 2 },
+                    { id: 'home_headlamp', label: '頭燈', desc: '空出雙手作業', span: 2 },
+                    { id: 'home_radio_amfm', label: '收音機 (含電池)', desc: '網路斷線時獲取災情通報', span: 2 },
+                    { id: 'home_powerbank_large', label: '大容量行動電源', desc: '維持手機通訊電力', span: 2 }
+                ]
+            },
+            {
+                title: '修繕與防護',
+                items: [
+                    { id: 'home_fire_extinguisher', label: '強化液滅火器', desc: '適用各種火災，居家安全必備', span: 2 },
+                    { id: 'home_tape_duct', label: '大力膠帶 (Duct Tape)', desc: '玻璃防震、簡易修補', span: 2 },
+                    { id: 'home_gloves_work', label: '加厚工作手套', desc: '防切割、耐磨' },
+                    { id: 'home_multi_tool', label: '多功能瑞士刀', desc: '開罐、剪切、螺絲起子' }
+                ]
+            },
+            {
+                title: '生活品質與心理',
+                items: [
+                    { id: 'home_fan_usb', label: 'USB 小型風扇', desc: '搭配行動電源，夏季停電降溫', span: 2 },
+                    { id: 'home_psych_comfort', label: '心理撫慰物資', desc: '咖啡/茶包、巧克力、撲克牌', span: 2 },
+                    { id: 'home_map_paper', label: '家庭聯絡地圖 (紙本)', desc: '通訊中斷時的導航與集合', span: 2 }
+                ]
+            }
+        ]
+    }
+];
+
+let currentMode = 'home'; // Default
+
 const container = document.getElementById('checklist-container');
 const progressFill = document.getElementById('progress-fill');
 const progressPercent = document.getElementById('progress-percent');
 const clearBtn = document.getElementById('clear-btn');
 const printBtn = document.getElementById('print-btn');
+const landingPage = document.getElementById('landing-page');
+const landingCards = document.querySelectorAll('.landing-card');
 
 function renderChecklist() {
-    const savedState = JSON.parse(localStorage.getItem('evacuationProgress') || '{}');
-    const lastUpdate = localStorage.getItem('lastUpdateDate') || '尚未開始準備';
+    const data = currentMode === 'escape' ? checklistData : homeReservesData;
+    const storageKey = currentMode === 'escape' ? 'evacuationProgress' : 'homeReservesProgress';
+    const dateKey = currentMode === 'escape' ? 'lastUpdateDate' : 'homeLastUpdateDate';
+
+    const savedState = JSON.parse(localStorage.getItem(storageKey) || '{}');
+    const lastUpdate = localStorage.getItem(dateKey) || '尚未開始準備';
 
     let html = '<div class="manual-table">';
-    checklistData.forEach(cat => {
+    data.forEach(cat => {
+
         html += '<div class="category-row">';
         html += '<div class="side-header">' + cat.sideLabel + '</div>';
         html += '<div class="content-area">';
@@ -153,19 +241,61 @@ function renderChecklist() {
         });
         html += '</div></div>';
     });
+
+    // Add consolidated "Others/Custom" section
+    const customKey = `custom_${currentMode}_extra`;
+    const customItems = JSON.parse(localStorage.getItem(customKey) || '[]');
+
+    html += '<div class="category-row">';
+    html += '<div class="side-header">其他</div>';
+    html += '<div class="content-area">';
+    html += '<div class="sub-category">';
+    html += '<div class="sub-label">自定義項目</div>';
+    html += '<div class="items-container">';
+
+    customItems.forEach((cItem, index) => {
+        const checked = cItem.checked ? 'checked' : '';
+        html += `<label class="item span-2">`;
+        html += `<input type="checkbox" data-custom-key="${customKey}" data-index="${index}" ${checked} onchange="handleCustomCheckUpdate(this)">`;
+        html += `<div class="item-text">`;
+        html += `<span class="item-label">${cItem.label}</span>`;
+        html += `</div>`;
+        html += `<button class="delete-btn" onclick="handleDeleteCustomItem('${customKey}', ${index})" title="刪除" data-html2canvas-ignore>×</button>`;
+        html += `</label>`;
+    });
+
+    // Add input field at the bottom of this specific sub-category
+    html += `<div class="custom-item-row" data-html2canvas-ignore>`;
+    html += `<div class="custom-input-group">`;
+    html += `<input type="text" class="custom-input" placeholder="想要增加什麼？" id="input_${customKey}">`;
+    html += `<button class="add-item-btn" onclick="handleAddCustomItem('${customKey}')">新增</button>`;
+    html += `</div></div>`;
+
+    html += '</div></div></div></div>';
     html += '</div>';
 
     // Add Date and Tips section
     html += '<div class="manual-footer-info">';
     html += '<div class="date-row">📅 本清單最後更新日期：<span class="update-date">' + lastUpdate + '</span></div>';
     html += '<div class="tips-box">';
-    html += '<h4>💡 避難包小提醒</h4>';
-    html += '<ul>';
-    html += '<li>建議每 <span style="color:red;font-weight:bold;">6個月</span> 檢查一次避難包，更新過期食物、水及電池。</li>';
-    html += '<li>避難包重量建議：男性不超過 <span style="color:red;font-weight:bold;">15kg</span>，女性不超過 <span style="color:red;font-weight:bold;">10kg</span>（以背得動為準）。</li>';
-    html += '<li>請放置於家中、辦公室出口處等 <span style="color:red;font-weight:bold;">隨手可得</span> 的地方。</li>';
-    html += '</ul>';
+
+    if (currentMode === 'escape') {
+        html += '<h4>💡 避難包小提醒</h4>';
+        html += '<ul>';
+        html += '<li>建議每 <span style="color:red;font-weight:bold;">6個月</span> 檢查一次避難包，更新過期食物、水及電池。</li>';
+        html += '<li>避難包重量建議：男性不超過 <span style="color:red;font-weight:bold;">15kg</span>，女性不超過 <span style="color:red;font-weight:bold;">10kg</span>（以背得動為準）。</li>';
+        html += '<li>請放置於家中、辦公室出口處等 <span style="color:red;font-weight:bold;">隨手可得</span> 的地方。</li>';
+        html += '</ul>';
+    } else {
+        html += '<h4>🏠 居家儲備小提醒</h4>';
+        html += '<ul>';
+        html += '<li>物資應儲放在家中通風陰涼處，並採取<span style="color:red;font-weight:bold;">「先進先出」</span>原則更新。</li>';
+        html += '<li>建議準備至少 <span style="color:red;font-weight:bold;">7-14 天份</span> 的生存物資。</li>';
+        html += '<li>卡式瓦斯罐應存放於乾燥處，避免受潮或太陽直射。</li>';
+        html += '</ul>';
+    }
     html += '</div></div>';
+
 
     container.innerHTML = html;
     updateProgress(false); // Don't update date during initial render
@@ -174,12 +304,47 @@ function renderChecklist() {
 function handleUpdate() {
     const now = new Date();
     const dateStr = now.getFullYear() + '/' + (now.getMonth() + 1) + '/' + now.getDate() + ' ' + now.getHours() + ':' + now.getMinutes().toString().padStart(2, '0');
-    localStorage.setItem('lastUpdateDate', dateStr);
+
+    const dateKey = currentMode === 'escape' ? 'lastUpdateDate' : 'homeLastUpdateDate';
+    localStorage.setItem(dateKey, dateStr);
 
     const dateDisplay = document.querySelector('.update-date');
     if (dateDisplay) dateDisplay.innerText = dateStr;
 
     updateProgress(true);
+}
+
+function handleAddCustomItem(key) {
+    const input = document.getElementById('input_' + key);
+    const val = input.value.trim();
+    if (!val) return;
+
+    const customItems = JSON.parse(localStorage.getItem(key) || '[]');
+    customItems.push({ label: val, checked: false });
+    localStorage.setItem(key, JSON.stringify(customItems));
+
+    input.value = '';
+    renderChecklist();
+    handleUpdate();
+}
+
+function handleDeleteCustomItem(key, index) {
+    const customItems = JSON.parse(localStorage.getItem(key) || '[]');
+    customItems.splice(index, 1);
+    localStorage.setItem(key, JSON.stringify(customItems));
+    renderChecklist();
+    handleUpdate();
+}
+
+function handleCustomCheckUpdate(checkbox) {
+    const key = checkbox.dataset.customKey;
+    const index = parseInt(checkbox.dataset.index);
+    const customItems = JSON.parse(localStorage.getItem(key) || '[]');
+    if (customItems[index]) {
+        customItems[index].checked = checkbox.checked;
+        localStorage.setItem(key, JSON.stringify(customItems));
+    }
+    handleUpdate();
 }
 
 function updateProgress(save) {
@@ -193,18 +358,56 @@ function updateProgress(save) {
 
     if (save) {
         const state = {};
-        checkboxes.forEach(cb => { state[cb.id] = cb.checked; });
-        localStorage.setItem('evacuationProgress', JSON.stringify(state));
+        checkboxes.forEach(cb => {
+            if (!cb.dataset.customKey) { // Only save non-custom items to the main progress state
+                state[cb.id] = cb.checked;
+            }
+        });
+        const storageKey = currentMode === 'escape' ? 'evacuationProgress' : 'homeReservesProgress';
+        localStorage.setItem(storageKey, JSON.stringify(state));
     }
 }
 
+// Tab Switching
+function switchMode(mode) {
+    currentMode = mode;
+
+    // Update Title
+    const title = document.querySelector('.manual-header-box h1');
+    title.innerText = currentMode === 'escape' ? '緊急避難包準備' : '居家物資儲備';
+
+    renderChecklist();
+}
+
+// Landing Page Logic
+landingCards.forEach(card => {
+    card.addEventListener('click', () => {
+        const choice = card.dataset.choice;
+        switchMode(choice);
+        landingPage.classList.add('fade-out');
+    });
+});
+
 clearBtn.addEventListener('click', () => {
-    if (confirm('確定要清除所有勾選進度嗎？')) {
-        localStorage.removeItem('evacuationProgress');
-        localStorage.removeItem('lastUpdateDate');
+    if (confirm('確定要重置目前的勾選進度嗎？（您的自定義項目將會保留，但會取消勾選）')) {
+        const storageKey = currentMode === 'escape' ? 'evacuationProgress' : 'homeReservesProgress';
+        const dateKey = currentMode === 'escape' ? 'lastUpdateDate' : 'homeLastUpdateDate';
+        localStorage.removeItem(storageKey);
+        localStorage.removeItem(dateKey);
+
+        // Uncheck custom items instead of removing them
+        Object.keys(localStorage).forEach(key => {
+            if (key.startsWith(`custom_${currentMode}_`)) {
+                const customItems = JSON.parse(localStorage.getItem(key) || '[]');
+                const resetItems = customItems.map(item => ({ ...item, checked: false }));
+                localStorage.setItem(key, JSON.stringify(resetItems));
+            }
+        });
+
         renderChecklist();
     }
 });
+
 
 const calendarBtn = document.getElementById('calendar-btn');
 
@@ -224,6 +427,11 @@ calendarBtn.addEventListener('click', () => {
     const nextDay = new Date(future.getTime() + 86400000); // +1 day
     const endDate = formatDate(nextDay);
 
+    const summary = currentMode === 'escape' ? '緊急避難包定期檢查 (6個月一次)' : '居家儲備物資定期檢查 (6個月一次)';
+    const description = currentMode === 'escape'
+        ? '提醒您：今天該檢查避難包物資囉！請確認食物、水、電池是否過期。\\n\\nhttps://orange-book-checklist.zeabur.app/'
+        : '提醒您：今天該檢查居家儲備物資囉！請確認瓦斯罐、大桶水、罐頭是否過期。\\n\\nhttps://orange-book-checklist.zeabur.app/';
+
     const icsContent = [
         'BEGIN:VCALENDAR',
         'VERSION:2.0',
@@ -231,8 +439,8 @@ calendarBtn.addEventListener('click', () => {
         'BEGIN:VEVENT',
         'DTSTART;VALUE=DATE:' + startDate,
         'DTEND;VALUE=DATE:' + endDate,
-        'SUMMARY:緊急避難包定期檢查 (6個月一次)',
-        'DESCRIPTION:提醒您：今天該檢查避難包物資囉！請確認水、食物、電池是否過期。\\n\\nhttps://orange-book-checklist.zeabur.app/',
+        'SUMMARY:' + summary,
+        'DESCRIPTION:' + description,
         'LOCATION:家中/辦公室',
         'TRANSP:TRANSPARENT',
         'END:VEVENT',
@@ -242,7 +450,7 @@ calendarBtn.addEventListener('click', () => {
     const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
-    link.download = '防災包檢查提醒.ics';
+    link.download = '小橘書-防災檢查提醒.ics';
     link.click();
 
     // Alert for mobile users
@@ -268,8 +476,13 @@ googleCalBtn.addEventListener('click', () => {
     const nextDay = new Date(future.getTime() + 86400000);
     const endDate = formatDate(nextDay);
 
-    const title = encodeURIComponent('緊急避難包定期檢查 (6個月一次)');
-    const details = encodeURIComponent('提醒您：今天該檢查避難包物資囉！請確認水、食物、電池是否過期。\n\nhttps://orange-book-checklist.zeabur.app/');
+    const titleStr = currentMode === 'escape' ? '緊急避難包定期檢查 (6個月一次)' : '居家儲備物資定期檢查 (6個月一次)';
+    const descStr = currentMode === 'escape'
+        ? '提醒您：今天該檢查避難包物資囉！請確認食物、水、電池是否過期。\n\nhttps://orange-book-checklist.zeabur.app/'
+        : '提醒您：今天該檢查居家儲備物資囉！請確認瓦斯罐、大桶水、罐頭是否過期。\n\nhttps://orange-book-checklist.zeabur.app/';
+
+    const title = encodeURIComponent(titleStr);
+    const details = encodeURIComponent(descStr);
     const location = encodeURIComponent('家中/辦公室');
 
     const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${location}&dates=${startDate}/${endDate}`;
@@ -302,7 +515,8 @@ downloadBtn.addEventListener('click', () => {
         }
     }).then(canvas => {
         const link = document.createElement('a');
-        link.download = '全民國防應變手冊-避難包清單.png';
+        const fileName = currentMode === 'escape' ? '小橘書-緊急避難包清單.png' : '小橘書-居家物資儲備清單.png';
+        link.download = fileName;
         link.href = canvas.toDataURL('image/png');
         link.click();
         target.style.boxShadow = originalStyle;
@@ -310,5 +524,27 @@ downloadBtn.addEventListener('click', () => {
 });
 
 printBtn.addEventListener('click', () => { window.print(); });
+
+const shareBtn = document.getElementById('share-btn');
+shareBtn.addEventListener('click', async () => {
+    const title = '小橘書防災清單 - 個人化防災物資檢查';
+    const text = '這份「小橘書」防災清單非常實用，推薦你也來檢查一下家裡的備品是否齊全！';
+    const url = 'https://orange-book-checklist.zeabur.app/';
+
+    if (navigator.share) {
+        try {
+            await navigator.share({ title, text, url });
+        } catch (err) {
+            console.log('分享取消或失敗');
+        }
+    } else {
+        try {
+            await navigator.clipboard.writeText(`${text}\n\n連結：${url}`);
+            alert('已將推薦網址複製到剪貼簿，您可以直接發送給好友！');
+        } catch (err) {
+            alert('您的瀏覽器不支援自動分享，請複製此網址：' + url);
+        }
+    }
+});
 
 renderChecklist();
